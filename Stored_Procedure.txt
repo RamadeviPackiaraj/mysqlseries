@@ -1,0 +1,85 @@
+-- stored procedure
+use employee_db;
+create table emp_details(
+emp_id INTEGER PRIMARY KEY,
+emp_name TEXT NOT NULL,
+emp_dept TEXT,
+emp_salary REAL,
+dept_id INTEGER);
+INSERT INTO emp_details VALUES (1,'Ramadevi','CSBS',70000,38);
+INSERT INTO emp_details VALUES (2,'Mithra','CSE',68000,43);
+INSERT INTO emp_details VALUES (3,'Saranya','IT',69000,45);
+INSERT INTO emp_details VALUES (4,'Keerthi','AIDS',80000,22);
+INSERT INTO emp_details VALUES (5,'Subu','AIML',95000,51);
+select*from emp_details;
+-- create procedure large_salaries() 
+select*from emp_details where emp_salary>=80000;
+-- call large_salaries();
+
+-- stored procedure
+use employee_db;
+create table emp_details(
+emp_id INTEGER PRIMARY KEY,
+emp_name TEXT NOT NULL,
+emp_dept TEXT,
+emp_salary REAL,
+dept_id INTEGER);
+INSERT INTO emp_details VALUES (1,'Ramadevi','CSBS',70000,38);
+INSERT INTO emp_details VALUES (2,'Mithra','CSE',68000,43);
+INSERT INTO emp_details VALUES (3,'Saranya','IT',69000,45);
+INSERT INTO emp_details VALUES (4,'Keerthi','AIDS',80000,22);
+INSERT INTO emp_details VALUES (5,'Subu','AIML',95000,51);
+select*from emp_details;
+-- create procedure large_salaries() 
+select*from emp_details where emp_salary>=80000;
+-- call large_salaries();
+
+DELIMITER $$ 
+CREATE PROCEDURE large_salaries1() 
+BEGIN
+	select * from emp_details where emp_salary>=90000;
+	select * from emp_details where emp_salary>=70000;
+END $$
+
+DELIMITER ;
+
+call large_salaries1();
+
+-- stored procedure
+use employee_db;
+create table emp_details(
+emp_id INTEGER PRIMARY KEY,
+emp_name TEXT NOT NULL,
+emp_dept TEXT,
+emp_salary REAL,
+dept_id INTEGER);
+INSERT INTO emp_details VALUES (1,'Ramadevi','CSBS',70000,38);
+INSERT INTO emp_details VALUES (2,'Mithra','CSE',68000,43);
+INSERT INTO emp_details VALUES (3,'Saranya','IT',69000,45);
+INSERT INTO emp_details VALUES (4,'Keerthi','AIDS',80000,22);
+INSERT INTO emp_details VALUES (5,'Subu','AIML',95000,51);
+select*from emp_details;
+-- create procedure large_salaries() 
+select*from emp_details where emp_salary>=80000;
+-- call large_salaries();
+
+DELIMITER $$ 
+CREATE PROCEDURE large_salaries2() 
+BEGIN
+	select * from emp_details where emp_salary>=90000;
+	select * from emp_details where emp_salary>=70000;
+END $$
+
+DELIMITER ;
+
+call large_salaries2();
+
+
+DELIMITER $$
+CREATE procedure Large_Salaries12(salary INT)
+BEGIN
+SELECT emp_id,emp_name,emp_salary from emp_details where emp_salary=salary;
+END$$
+DELIMITER ;
+call Large_Salaries12(80000);
+
