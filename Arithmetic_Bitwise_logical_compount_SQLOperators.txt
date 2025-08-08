@@ -1,0 +1,186 @@
+use employee_db;
+create table Arithmetic_Operation(
+id int primary key auto_increment,
+num1 INTEGER,
+num2 INTEGER);
+INSERT INTO Arithmetic_Operation(num1,num2) VALUES (10,5),(45,9),(36,4),(100,25),(81,3);
+SELECT num1,num2, 
+num1+num2 AS ADDITION , 
+num1-num2 AS SUBTRACTION, 
+num1*num2 AS MULTIPLICATION, 
+num1/num2 AS DIVISION,
+num1%num2 AS PERCENTAGE
+FROM Arithmetic_Operation;
+--- Stored Procedure
+
+DELIMITER $$
+create procedure Arithmetic_Storeneww()
+BEGIN 
+SELECT num1,num2, 
+num1+num2 AS ADDITION , 
+num1-num2 AS SUBTRACTION, 
+num1*num2 AS MULTIPLICATION, 
+num1/num2 AS DIVISION,
+num1%num2 AS PERCENTAGE
+FROM Arithmetic_Operation;
+END $$;
+DELIMITER ;
+call Arithmetic_Storeneww();
+
+-- Create a table for bitwise demo
+CREATE TABLE Bitwise_Demo (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    num1 INT,
+    num2 INT
+);
+
+-- Insert some sample data
+INSERT INTO Bitwise_Demo (num1, num2) VALUES
+(5, 3),
+(12, 6),
+(7, 10),
+(15, 8);
+
+-- Perform Bitwise operations
+SELECT
+    num1,
+    num2,
+    num1 & num2 AS Bitwise_AND,
+    num1 | num2 AS Bitwise_OR,
+    num1 ^ num2 AS Bitwise_XOR
+FROM Bitwise_Demo;
+
+-- Use your database
+USE employee_db;
+
+-- 1️⃣ Create table
+DROP TABLE IF EXISTS employees_demo;
+
+CREATE TABLE employees_demo (
+    emp_id INT PRIMARY KEY AUTO_INCREMENT,
+    emp_name VARCHAR(50),
+    emp_salary DECIMAL(10,2),
+    emp_dept VARCHAR(20)
+);
+
+-- 2️⃣ Insert data
+INSERT INTO employees_demo (emp_name, emp_salary, emp_dept) VALUES
+('Alice', 50000, 'HR'),
+('Bob', 75000, 'IT'),
+('Charlie', 90000, 'Finance'),
+('David', 65000, 'IT'),
+('Eve', 80000, 'Finance');
+
+-- 3️⃣ Examples
+
+-- ALL: Salary greater than all HR salaries
+SELECT emp_name, emp_salary
+FROM employees_demo
+WHERE emp_salary > ALL (
+    SELECT emp_salary FROM employees_demo WHERE emp_dept = 'HR'
+);
+
+-- AND: IT employees earning more than 70k
+SELECT emp_name
+FROM employees_demo
+WHERE emp_dept = 'IT' AND emp_salary > 70000;
+
+-- ANY: Salary greater than at least one HR salary
+SELECT emp_name, emp_salary
+FROM employees_demo
+WHERE emp_salary > ANY (
+    SELECT emp_salary FROM employees_demo WHERE emp_dept = 'HR'
+);
+
+-- BETWEEN: Salary between 60k and 80k
+SELECT emp_name
+FROM employees_demo
+WHERE emp_salary BETWEEN 60000 AND 80000;
+
+-- EXISTS: IT employees if Finance department exists
+SELECT emp_name
+FROM employees_demo e
+WHERE EXISTS (
+    SELECT 1 FROM employees_demo WHERE emp_dept = 'Finance' AND e.emp_dept = 'IT'
+);
+
+-- IN: Employees in IT or Finance
+SELECT emp_name
+FROM employees_demo
+WHERE emp_dept IN ('IT', 'Finance');
+
+-- LIKE: Names starting with 'A'
+SELECT emp_name
+FROM employees_demo
+WHERE emp_name LIKE 'A%';
+
+-- NOT: Employees not in IT
+SELECT emp_name
+FROM employees_demo
+WHERE NOT emp_dept = 'IT';
+
+-- OR: Salary > 80k or works in HR
+SELECT emp_name
+FROM employees_demo
+WHERE emp_salary > 80000 OR emp_dept = 'HR';
+
+-- SOME: Salary greater than at least one Finance salary
+SELECT emp_name, emp_salary
+FROM employees_demo
+WHERE emp_salary > SOME (
+    SELECT emp_salary FROM employees_demo WHERE emp_dept = 'Finance'
+);
+
+USE employee_db;
+
+DROP TABLE IF EXISTS operator_demo;
+
+CREATE TABLE operator_demo (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    num1 INT,
+    num2 INT
+);
+
+INSERT INTO operator_demo (num1, num2) VALUES
+(10, 5),
+(25, 3),
+(40, 7);
+-- ADD EQUALS (+=)
+UPDATE operator_demo
+SET num1 = num1 + num2   -- equivalent to +=
+WHERE id = 1;
+
+-- SUBTRACT EQUALS (-=)
+UPDATE operator_demo
+SET num1 = num1 - num2   -- equivalent to -=
+WHERE id = 2;
+
+-- MULTIPLY EQUALS (*=)
+UPDATE operator_demo
+SET num1 = num1 * num2   -- equivalent to *=
+WHERE id = 3;
+
+-- DIVIDE EQUALS (/=)
+UPDATE operator_demo
+SET num1 = num1 / num2   -- equivalent to /=
+WHERE id = 1;
+
+-- MODULO EQUALS (%=)
+UPDATE operator_demo
+SET num1 = num1 % num2   -- equivalent to %=
+WHERE id = 2;
+
+-- BITWISE AND EQUALS (&=)
+UPDATE operator_demo
+SET num1 = num1 & num2   -- equivalent to &=
+WHERE id = 3;
+
+-- BITWISE XOR EQUALS (^=)
+UPDATE operator_demo
+SET num1 = num1 ^ num2   -- equivalent to ^=
+WHERE id = 1;
+
+-- BITWISE OR EQUALS (|=)
+UPDATE operator_demo
+SET num1 = num1 | num2   -- equivalent to |=
+WHERE id = 2;
